@@ -30,11 +30,11 @@ if ($result !== false) {
 
     // Output JSON
     header('Content-Type: application/json');
-    echo $json;
+    // echo $json;
 
     // If you want to save to a file
     file_put_contents('products.json', $json);
-    header("Location: allnexproduct.php");
+    header("Location: index.php");
     
 } else {
     die(print_r($conn->errorInfo(), true));
