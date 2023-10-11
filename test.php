@@ -20,7 +20,7 @@ if ($result !== false) {
     $ps = array();
     foreach ($data as $key => $value) {
         $p = array("path" => $value[1],
-    "fields" => array("name" => $value[2],"description"=>$value[3],"sets"=>$value[4],"technicaldata"=>$value[5],"scope"=>$value[6],"download"=>$value[7],"image"=>$value[8],"tags"=>$value[9]));
+    "fields" => array("name" => $value[2],"description"=>$value[3],"sets"=>$value[4],"technicaldata"=>$value[5],"scope"=>$value[6],"download"=>$value[7],"image"=>explode(",",$value[8]),"tags"=>explode("/",$value[9])));
         array_push($ps,$p);
     }
     
