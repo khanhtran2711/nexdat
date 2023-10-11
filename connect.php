@@ -9,7 +9,7 @@ class Connect{
         $this->server = "localhost";
         $this->username = "root";
         $this->password = "";
-        $this->dbName = "shop_demo";
+        $this->dbName = "nexdat";
     }
 
     // Option 1: mysqli
