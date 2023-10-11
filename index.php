@@ -13,36 +13,44 @@ if(isset($_POST['Add'])){
     $tech =  $_POST['ptech'];
     $down =  $_POST['pdown'];
     $tags =  $_POST['ptags'];
+    
     $url = $_POST['pimage'];
-    $pattern = "/([\w\-]*\.jpg)|([\w\-]*\.png)|([\w\-]*\.jpeg)/";
-    preg_match_all($pattern, $url, $m);
-    $files = explode(",",$url);
-    $i=0;
-    $ln = count($files);
-    foreach ($files as $f) {
-        $data = file_get_contents($f);
-        $new = "image/".$m[0][$i];
-        $flag = file_put_contents($new, $data);    
-        $i++;
+    $flag = false;
+    if($url!=""){
+        $pattern = "/([\w\-]*\.jpg)|([\w\-]*\.png)|([\w\-]*\.jpeg)/";
+        preg_match_all($pattern, $url, $m);
+        $files = explode(",",$url);
+        $i=0;
+        $ln = count($files);
+        foreach ($files as $f) {
+            $data = file_get_contents($f);
+            $new = "image/".$m[0][$i];
+            $flag = file_put_contents($new, $data);    
+            $i++;
+        }
     }
     
+    
     if($flag){
-        $sql = "INSERT INTO `products`(`path`, `name`, `description`, `sets`, `data`, `scope`, `download`, `image`, `tags`) VALUES (?,?,?,?,?,?,?,?,?)";
-        $re = $dbLink->prepare($sql);
+        
         $v = [
             $path,$name,$desc,$sets,$tech,$scope,$down,implode(",",$m[0]),$tags
         ];
-        $stmt = $re->execute($v);
-        if($stmt){
-            echo "<div class='alert alert-success' role='alert'>
-            $name is added successfully </div>";
-        }else{
-            echo "<div class='alert alert-danger' role='alert'>
-            $name is added failed </div>";
-        }
+    }else{
+        $v = [
+            $path,$name,$desc,$sets,$tech,$scope,$down,"",$tags
+        ];
+    }
+    
+    $sql = "INSERT INTO `products`(`path`, `name`, `description`, `sets`, `data`, `scope`, `download`, `image`, `tags`) VALUES (?,?,?,?,?,?,?,?,?)";
+    $re = $dbLink->prepare($sql);
+    $stmt = $re->execute($v);
+    if($stmt){
+        echo "<div class='alert alert-success' role='alert'>
+        $name is added successfully </div>";
     }else{
         echo "<div class='alert alert-danger' role='alert'>
-            Image is copied failed </div>";
+        $name is added failed </div>";
     }
     
 
