@@ -1,8 +1,20 @@
 <?php
 require_once('header.php');
 require_once('connect.php');
+$c = new Connect();
+$dbLink2 = $c->connectToMySQL();
+$sql2 = 'SELECT `path` FROM products';
+$re2=$dbLink2->query($sql2);
+$pathArry = array();
+if($re2->num_rows>0){
+    while($row=$re2->fetch_assoc()){
+        $pathArry[] = $row['path'];
+    }
+}
+
+
 if(isset($_POST['Add'])){
-    $c = new Connect();
+    
     $dbLink = $c->connectToPDO();
     // $id =  $_POST['product_id'];
     $path =  $_POST['ppath'];
@@ -152,7 +164,16 @@ if(isset($_POST['json'])){
             </form>
                     
             </div> <!--container-->
-
+            <script>
+                $(document).ready(function(){
+                    
+                    let path = <?php echo json_encode($pathArry); ?>; 
+                    $("#ppath").autocomplete({
+                        source: path
+                    });
+                    
+                })
+    </script>
 <?php
 require_once('footer.php');
 ?>
