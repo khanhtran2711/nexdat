@@ -56,14 +56,17 @@ if(isset($_POST['Add'])){
     
     $sql = "INSERT INTO `products`(`path`, `name`, `description`, `sets`, `data`, `scope`, `download`, `image`, `tags`) VALUES (?,?,?,?,?,?,?,?,?)";
     $re = $dbLink->prepare($sql);
-    $stmt = $re->execute($v);
-    if($stmt){
+    try {
+        $stmt = $re->execute($v);
+    } catch (PDOException $e) {
+        echo "<div class='alert alert-danger' role='alert'>
+        $e  </div>";
+    }
+  
+   
         echo "<div class='alert alert-success' role='alert'>
         $name is added successfully </div>";
-    }else{
-        echo "<div class='alert alert-danger' role='alert'>
-        $name is added failed </div>";
-    }
+   
     
 
 }
