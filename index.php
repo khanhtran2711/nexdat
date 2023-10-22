@@ -25,6 +25,8 @@ if(isset($_POST['Add'])){
     $tech =  $_POST['ptech'];
     $down =  $_POST['pdown'];
     $tags =  $_POST['ptags'];
+    $req =  $_POST['prequired'];
+    $rec =  $_POST['precom'];
     
     $url = $_POST['pimage'];
     $flag = false;
@@ -46,15 +48,15 @@ if(isset($_POST['Add'])){
     if($flag){
         
         $v = [
-            $path,$name,$desc,$sets,$tech,$scope,$down,implode(",",$m[0]),$tags
+            $path,$name,$desc,$sets,$tech,$scope,$down,implode(",",$m[0]),$tags,$req,$rec
         ];
     }else{
         $v = [
-            $path,$name,$desc,$sets,$tech,$scope,$down,"",$tags
+            $path,$name,$desc,$sets,$tech,$scope,$down,"",$tags,$req,$rec
         ];
     }
     
-    $sql = "INSERT INTO `products`(`path`, `name`, `description`, `sets`, `data`, `scope`, `download`, `image`, `tags`) VALUES (?,?,?,?,?,?,?,?,?)";
+    $sql = "INSERT INTO `products`(`path`, `name`, `description`, `sets`, `data`, `scope`, `download`, `image`, `tags`,`prequired`, `precom`) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
     $re = $dbLink->prepare($sql);
     try {
         $stmt = $re->execute($v);
@@ -135,6 +137,22 @@ if(isset($_POST['json'])){
                                 <label for="first-name-vertical">Product Download</label>
                                 <input type="text" id="pdown" class="form-control"
                                     name="pdown" placeholder="Product Download"
+                                    value ="">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="first-name-vertical">Product Required</label>
+                                <input type="text" id="prequired" class="form-control"
+                                    name="prequired" placeholder="Product Required"
+                                    value ="">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="first-name-vertical">Product Recommended</label>
+                                <input type="text" id="precom" class="form-control"
+                                    name="precom" placeholder="Product Recommended"
                                     value ="">
                             </div>
                         </div>
